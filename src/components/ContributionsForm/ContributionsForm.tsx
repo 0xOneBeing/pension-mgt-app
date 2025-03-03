@@ -1,20 +1,45 @@
 import { Form, Input, Button, Select, DatePicker, message } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
+import { RuleObject } from "rc-field-form/es/interface"; // Correct import path
 
 const { Option } = Select;
 
-const ContributionForm = ({
-  onSubmit,
-}: {
-  onSubmit: (values: any) => void;
-}) => {
+interface ContributionFormValues {
+  type: "Mandatory" | "Voluntary";
+  amount: number;
+  date: dayjs.Dayjs;
+}
+
+interface ContributionFormProps {
+  onSubmit: (values: ContributionFormValues) => void;
+}
+
+const ContributionForm = ({ onSubmit }: ContributionFormProps) => {
   const [form] = Form.useForm();
   const [contributions, setContributions] = useState<
-    { date: string; type: string }[]
+    { date: string; type: "Mandatory" | "Voluntary" }[]
   >([]);
 
-  const validateContribution = (_: any, value: any) => {
+  // const validateContribution = (_: any, value: string) => {
+  //   if (!/^\d+(\.\d{1,2})?$/.test(value)) {
+  //     return Promise.reject(
+  //       new Error("Enter a valid amount (e.g., 1000 or 1000.50)")
+  //     );
+  //   }
+  //   return Promise.resolve();
+  // };
+
+  // const validateContribution: Rule["validator"] = (_, value: string) => {
+  //   if (!/^\d+(\.\d{1,2})?$/.test(value)) {
+  //     return Promise.reject(
+  //       new Error("Enter a valid amount (e.g., 1000 or 1000.50)")
+  //     );
+  //   }
+  //   return Promise.resolve();
+  // };
+
+  const validateContribution = (_: RuleObject, value: string) => {
     if (!/^\d+(\.\d{1,2})?$/.test(value)) {
       return Promise.reject(
         new Error("Enter a valid amount (e.g., 1000 or 1000.50)")
@@ -23,7 +48,7 @@ const ContributionForm = ({
     return Promise.resolve();
   };
 
-  const handleSubmit = (values: any) => {
+  const handleSubmit = (values: ContributionFormValues) => {
     const { date, type } = values;
     const formattedDate = dayjs(date).format("YYYY-MM");
 

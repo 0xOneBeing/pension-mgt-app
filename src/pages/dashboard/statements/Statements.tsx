@@ -5,16 +5,30 @@ import StatementForm from "../../../components/StatementForm/StatementForm";
 import ContributionChart from "../../../components/ContributionChart/ContributionChart";
 import DashboardLayout from "../../../components/DashboardLayout/DashboardLayout";
 
+// Define the types for the data
+interface Statement {
+  id: number;
+  date: string;
+  amount: string; // Or number if it's numeric
+  type: string;
+}
+
+interface DateRange {
+  startDate: string;
+  endDate: string;
+}
+
 const Statements = () => {
-  const [statements, setStatements] = useState<any[]>([
+  //   const [statements, setStatements] = useState<Statement[]>([
+  const [statements] = useState<Statement[]>([
     { id: 1, date: "2025-02-10", amount: "₦50,000", type: "Mandatory" },
     { id: 2, date: "2025-01-05", amount: "₦30,000", type: "Voluntary" },
   ]);
 
   const [filteredStatements, setFilteredStatements] =
-    useState<any[]>(statements);
+    useState<Statement[]>(statements);
 
-  const handleGenerate = ({ startDate, endDate }: any) => {
+  const handleGenerate = ({ startDate, endDate }: DateRange) => {
     const filtered = statements.filter(
       (s) => s.date >= startDate && s.date <= endDate
     );

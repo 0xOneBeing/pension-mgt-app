@@ -1,46 +1,53 @@
 import { Table, Tag, Card } from "antd";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addNotification } from "../../../../features/notifications/notificationsSlice";
-import { showToast } from "../../../../utils/Notifications/Notifications";
 import DashboardLayout from "../../../../components/DashboardLayout/DashboardLayout";
 import ContributionForm from "../../../../components/ContributionsForm/ContributionsForm";
-import { validateContribution } from "../../../../utils/Validators/Validators";
+import { Contribution } from "../../../../features/contribution/contributionSlice";
+import dayjs from "dayjs"; // Import dayjs for date handling
+
+interface ContributionFormValues {
+  type: "Mandatory" | "Voluntary";
+  amount: number;
+  date: dayjs.Dayjs;
+}
 
 const ContributionManagement = () => {
-  const dispatch = useDispatch();
-
-  const [contributions, setContributions] = useState<any[]>([
+  const [contributions, setContributions] = useState<Contribution[]>([
     {
       id: 1,
       date: "2025-02",
-      amount: "₦50,000",
+      amount: 50000,
       type: "Mandatory",
       status: "Confirmed",
     },
     {
       id: 2,
       date: "2025-01",
-      amount: "₦30,000",
+      amount: 30000,
       type: "Voluntary",
       status: "Pending",
     },
   ]);
 
-  const addContribution = (values: any) => {
-    const newContribution = {
-      id: contributions.length + 1,
-      date: values.date.format("YYYY-MM"),
-      amount: `₦${values.amount}`,
+  const addContribution = (values: ContributionFormValues) => {
+    const newContribution: Contribution = {
+      id: contributions.length + 1, // Generate a new ID
+      date: values.date.format("YYYY-MM"), // Format the date
+      amount: values.amount, // Use the amount directly (without currency symbol)
       type: values.type,
-      status: "Pending",
+      status: "Pending", // Default status
     };
     setContributions([...contributions, newContribution]);
   };
 
   const columns = [
     { title: "Date", dataIndex: "date", key: "date" },
-    { title: "Amount", dataIndex: "amount", key: "amount" },
+    {
+      title: "Amount",
+      dataIndex: "amount",
+      key: "amount",
+      render: (amount: number) => `₦${amount.toLocaleString()}`, // Format amount with currency symbol
+    },
     {
       title: "Type",
       dataIndex: "type",
@@ -64,35 +71,6 @@ const ContributionManagement = () => {
       },
     },
   ];
-
-  const handleContributionSubmit = (values: any) => {
-    // Simulated API call
-    // setTimeout(() => {
-    //   showToast("success", "Contribution submitted successfully!");
-    //   dispatch(
-    //     addNotification({
-    //       id: Date.now(),
-    //       message: "New contribution added",
-    //       type: "info",
-    //       read: false,
-    //     })
-    //   );
-    // }, 1000);
-
-    const contributions = useSelector((state: any) => state.contributions.list);
-    // const dispatch = useDispatch();
-
-    const errors = validateContribution(contributions, values);
-
-    if (errors.length > 0) {
-      errors.forEach((error) => showToast("error", error));
-      return;
-    }
-
-    // Proceed with submission if no errors
-    dispatch(addContribution(values));
-    showToast("success", "Contribution submitted successfully!");
-  };
 
   return (
     <DashboardLayout>
