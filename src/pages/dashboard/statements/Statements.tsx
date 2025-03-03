@@ -4,7 +4,7 @@ import { jsPDF } from "jspdf";
 import StatementForm from "../../../components/StatementForm/StatementForm";
 import ContributionChart from "../../../components/ContributionChart/ContributionChart";
 import DashboardLayout from "../../../components/DashboardLayout/DashboardLayout";
-import { showToast } from "../../../components/ShowToast/ShowToast";
+import { ShowToast } from "../../../components/ShowToast/ShowToast.tsx";
 
 // Define the types for the data
 interface Statement {
@@ -45,11 +45,11 @@ const Statements = () => {
     });
 
     doc.save("Contribution_Statement.pdf");
-    showToast("success", "PDF downloaded!");
+    ShowToast("success", "PDF downloaded!");
   };
 
   const handleShareEmail = () => {
-    showToast("success", "Statement sent via email!");
+    ShowToast("success", "Statement sent via email!");
   };
 
   const columns = [

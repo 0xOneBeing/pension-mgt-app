@@ -11,8 +11,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "../../assets/swiper.css"; // Substituted for self-hosted css file ???
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
 import "./Login.css";
-import { showToast } from "../../components/ShowToast/ShowToast";
-import { ToastContainer } from "../../components/ShowToast/Toast";
+import { ShowToast } from "../../components/ShowToast/ShowToast.tsx";
+// import { ToastContainer } from "../../components/ShowToast/Toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -23,17 +23,17 @@ const Login = () => {
   const onFinish = (values: { username: string; password: string }) => {
     if (values.username === "admin" && values.password === "password") {
       dispatch(login({ name: "Admin User", role: "admin" }));
-      showToast("success", "Login successful.");
+      ShowToast("success", "Login successful.");
       navigate("/dashboard");
     } else if (
       values.username === "individual" &&
       values.password === "password"
     ) {
       dispatch(login({ name: "Individual User", role: "individual" }));
-      showToast("success", "Login successful.");
+      ShowToast("success", "Login successful.");
       navigate("/dashboard");
     } else {
-      showToast("error", "Invalid credentials!");
+      ShowToast("error", "Invalid credentials!");
     }
   };
 
@@ -145,7 +145,7 @@ const Login = () => {
         </Link>
       </div>
 
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

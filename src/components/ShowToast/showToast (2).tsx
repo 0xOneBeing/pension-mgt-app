@@ -1,7 +1,7 @@
 import toast from "react-hot-toast";
 import { Toast } from "./Toast";
 
-export const ShowToast = (
+export const showToast = (
   status: "success" | "error" | "loading" | "info" | "custom",
   message: string,
   duration?: number
