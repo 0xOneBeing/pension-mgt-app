@@ -6,7 +6,7 @@ import ProtectedRoute from "./ProtectedRoutes";
 import Contributions from "../pages/dashboard/contributions/Contributions";
 import ContributionManagement from "../pages/dashboard/contributions/contributions-management/ContributionsManagement";
 import Statements from "../pages/dashboard/statements/Statements";
-import NotificationSettings from "../pages/NotificationSettings/NotificationsSettings";
+import NotificationSettings from "../pages/dashboard/notificationSettings/NotificationsSettings";
 import BenefitPreview from "../pages/dashboard/benefit-preview/BenefitPreview";
 
 const AppRoutes = () => {
@@ -38,9 +38,9 @@ const AppRoutes = () => {
         <Route
           path="/contributions/manage"
           element={
-            // <ProtectedRoute>
-            <ContributionManagement />
-            // </ProtectedRoute>
+            <ProtectedRoute>
+              <ContributionManagement />
+            </ProtectedRoute>
           }
         />
 

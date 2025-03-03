@@ -150,7 +150,11 @@ export default function DashboardLayout({
       </Sider>
       <Layout>
         <Header
-        // className="fixed w-full mb-8 z-10"
+          style={{
+            padding: 0,
+            // background: "rgba(255, 255, 255, 0.2)",
+          }}
+          // className="fixed w-full mb-8 z-10"
         >
           <span className="text-white shadow-md px-6 text-lg font-semibold">
             Dashboard

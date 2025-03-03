@@ -41,7 +41,7 @@ export const Toast = ({ message, status, duration = 3000, id }: ToastProps) => {
       icon: <LoadingOutlined />,
     },
     info: {
-      background: "#333",
+      background: "#ffa500",
       color: "#fff",
       icon: <InfoCircleFilled />,
     },
