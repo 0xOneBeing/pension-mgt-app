@@ -74,7 +74,7 @@ The application follows a modern React-based architecture:
 ## Setup and Installation
 
 1. **Clone the repository:**
-   `git clone [repository](https://github.com/0xOneBeing/pension-management-application.git)`
+   `git clone https://github.com/0xOneBeing/pension-mgt-app`
 2. **Navigate to the project directory:**
    `cd pension-management-application`
 3. **Install dependencies:**
