@@ -18,4 +18,15 @@
   --info-color: #17a2b8;
   --success-color: #28a745;
   --warning-color: #ffc107;
+
+  --sider-menu-bg: #001529;
+}
+
+li.ant-breadcrumb-separator {
+  color: var(--white-color) !important;
+  font-size: var(--text-base) !important /* 0.75rem = 12px */;
+  line-height: var(
+    --tw-leading,
+    var(--text-base--line-height) /* calc(1 / 0.75) ≈ 1.3333 */
+  ) !important;
 }

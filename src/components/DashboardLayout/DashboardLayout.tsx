@@ -1,5 +1,5 @@
-// import React, { useState } from "react";
-// import { Layout, Menu, Dropdown, Avatar, Typography } from "antd";
+// import React, { useState, useEffect } from "react";
+// import { Layout, Menu, Dropdown, Avatar, Typography, Breadcrumb } from "antd";
 // import {
 //   UserOutlined,
 //   PieChartOutlined,
@@ -11,10 +11,10 @@
 // } from "@ant-design/icons";
 // import { useDispatch, useSelector } from "react-redux";
 // import { logout } from "../../features/auth/authSlice";
-// import { useNavigate } from "react-router-dom";
+// import { useNavigate, useLocation } from "react-router-dom"; // Add useLocation
 // import type { MenuProps } from "antd";
 // import { RootState } from "../../store";
-// import SettingsModal from "../SettingsModal/SettingsModal"; // Import the SettingsModal
+// import SettingsModal from "../SettingsModal/SettingsModal";
 
 // const { Header, Sider, Content } = Layout;
 // const { Text } = Typography;
@@ -26,11 +26,40 @@
 // }) {
 //   const dispatch = useDispatch();
 //   const navigate = useNavigate();
+//   const location = useLocation(); // Get the current location
 //   const user = useSelector((state: RootState) => state.auth.user);
 //   const tempAvatar = useSelector((state: RootState) => state.auth.tempAvatar);
+//   const tempName = useSelector((state: RootState) => state.auth.tempName);
 //   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
+//   const [selectedKeys, setSelectedKeys] = useState<string[]>([]); // State for selected menu keys
+//   const [openKeys, setOpenKeys] = useState<string[]>([]); // State for open submenus
+//   const [breadcrumbItems, setBreadcrumbItems] = useState<{ title: string }[]>(
+//     []
+//   ); // State for breadcrumb items
 
 //   type MenuItem = Required<MenuProps>["items"][number];
+
+//   const siderStyle: React.CSSProperties = {
+//     overflow: "auto",
+//     height: "100vh",
+//     position: "sticky",
+//     insetInlineStart: 0,
+//     top: 0,
+//     bottom: 0,
+//     scrollbarWidth: "thin",
+//     scrollbarGutter: "stable",
+//   };
+
+//   const headerStyle: React.CSSProperties = {
+//     position: "sticky",
+//     top: 0,
+//     zIndex: 1,
+//     width: "100%",
+//     display: "flex",
+//     padding: "0px 20px",
+//     justifyContent: "space-between",
+//     alignItems: "center",
+//   };
 
 //   const handleLogout = () => {
 //     dispatch(logout());
@@ -60,6 +89,52 @@
 //       </Menu.Item>
 //     </Menu>
 //   );
+
+//   // Map routes to menu keys
+//   const routeToKeyMap: { [key: string]: string } = {
+//     "/dashboard": "1",
+//     "/contributions": "contributions",
+//     "/contributions/manage": "manage-contributions",
+//     "/statements": "statements",
+//     "/notifications": "notifications",
+//     "/benefits": "benefits",
+//   };
+
+//   // Map routes to submenu keys
+//   const routeToSubmenuKeyMap: { [key: string]: string } = {
+//     "/contributions": "contributions",
+//     "/contributions/manage": "contributions",
+//   };
+
+//   // Generate breadcrumb items based on the current path
+//   const generateBreadcrumbItems = (path: string) => {
+//     const paths = path.split("/").filter((p) => p); // Split the path and remove empty strings
+//     const items = paths.map((p, index) => {
+//       const url = `/${paths.slice(0, index + 1).join("/")}`; // Generate the URL for each breadcrumb item
+//       const title = p.charAt(0).toUpperCase() + p.slice(1); // Capitalize the first letter
+//       return { title, url };
+//     });
+//     return items;
+//   };
+
+//   // Update selectedKeys, openKeys, and breadcrumbItems based on the current route
+//   useEffect(() => {
+//     const path = location.pathname;
+//     const key = routeToKeyMap[path] || "1"; // Default to "1" if no match
+//     setSelectedKeys([key]);
+
+//     // Open the corresponding submenu if the route is inside a dropdown
+//     const submenuKey = routeToSubmenuKeyMap[path];
+//     if (submenuKey) {
+//       setOpenKeys([submenuKey]);
+//     } else {
+//       setOpenKeys([]); // Close all submenus if no match
+//     }
+
+//     // Generate breadcrumb items
+//     const breadcrumbItems = generateBreadcrumbItems(path);
+//     setBreadcrumbItems(breadcrumbItems);
+//   }, [location.pathname]);
 
 //   const items: MenuItem[] = [
 //     {
@@ -132,27 +207,30 @@
 //   ];
 
 //   return (
-//     <Layout style={{ minHeight: "100vh" }}>
-//       <Sider collapsible>
+//     <Layout style={{ minHeight: "100vh" }} hasSider>
+//       <Sider collapsible style={siderStyle}>
 //         <div className="brand text-white text-center py-8 text-lg font-semibold"></div>
 //         <Menu
 //           theme="dark"
 //           mode="inline"
 //           items={items}
+//           selectedKeys={selectedKeys} // Dynamically set selected keys
+//           openKeys={openKeys} // Dynamically set open submenus
+//           onOpenChange={(keys) => setOpenKeys(keys)} // Allow manual opening/closing of submenus
 //           defaultSelectedKeys={["1"]}
 //         />
 //       </Sider>
 //       <Layout>
-//         <Header
-//           style={{
-//             padding: "0 16px",
-//             background: "#001529",
-//             display: "flex",
-//             alignItems: "center",
-//             justifyContent: "space-between",
-//           }}
-//         >
-//           <span className="text-white text-lg font-semibold">Dashboard</span>
+//         <Header style={headerStyle}>
+//           {/* Breadcrumb */}
+//           <Breadcrumb>
+//             {/* <Breadcrumb.Item>Dashboard</Breadcrumb.Item> */}
+//             {breadcrumbItems.map((item, index) => (
+//               <Breadcrumb.Item className="text-base font-semibold text-white" key={index}>
+//                 {item.title}
+//               </Breadcrumb.Item>
+//             ))}
+//           </Breadcrumb>
 //           <Dropdown overlay={dropdownMenu} trigger={["click"]}>
 //             <div
 //               style={{
@@ -166,7 +244,10 @@
 //                 src={tempAvatar || user?.avatar} // Use tempAvatar if available, otherwise use user.avatar
 //                 icon={<UserOutlined />}
 //               />
-//               <Text style={{ color: "#fff" }}>{user?.name || "User"}</Text>
+//               <Text style={{ color: "#fff" }}>
+//                 {tempName || user?.name || "User"}
+//               </Text>{" "}
+//               {/* Use tempName if available, otherwise use user.name */}
 //             </div>
 //           </Dropdown>
 //         </Header>
@@ -184,8 +265,18 @@
 //   );
 // }
 
-import React, { useState } from "react";
-import { Layout, Menu, Dropdown, Avatar, Typography } from "antd";
+import React, { useState, useEffect } from "react";
+import {
+  Layout,
+  Menu,
+  Dropdown,
+  Avatar,
+  Typography,
+  Breadcrumb,
+  Drawer,
+  Button,
+  ConfigProvider,
+} from "antd";
 import {
   UserOutlined,
   PieChartOutlined,
@@ -194,10 +285,11 @@ import {
   PlusCircleOutlined,
   AccountBookOutlined,
   SettingOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import type { MenuProps } from "antd";
 import { RootState } from "../../store";
 import SettingsModal from "../SettingsModal/SettingsModal";
@@ -212,12 +304,41 @@ export default function DashboardLayout({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((state: RootState) => state.auth.user);
   const tempAvatar = useSelector((state: RootState) => state.auth.tempAvatar);
   const tempName = useSelector((state: RootState) => state.auth.tempName);
   const [isSettingsModalVisible, setIsSettingsModalVisible] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const [openKeys, setOpenKeys] = useState<string[]>([]);
+  const [breadcrumbItems, setBreadcrumbItems] = useState<{ title: string }[]>(
+    []
+  );
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false); // State for drawer visibility
 
   type MenuItem = Required<MenuProps>["items"][number];
+
+  const siderStyle: React.CSSProperties = {
+    overflow: "auto",
+    height: "100vh",
+    position: "sticky",
+    insetInlineStart: 0,
+    top: 0,
+    bottom: 0,
+    scrollbarWidth: "thin",
+    scrollbarGutter: "stable",
+  };
+
+  const headerStyle: React.CSSProperties = {
+    position: "sticky",
+    top: 0,
+    zIndex: 1,
+    width: "100%",
+    display: "flex",
+    padding: "0px 20px",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -230,6 +351,10 @@ export default function DashboardLayout({
 
   const handleSettingsModalClose = () => {
     setIsSettingsModalVisible(false);
+  };
+
+  const toggleDrawer = () => {
+    setIsDrawerVisible(!isDrawerVisible);
   };
 
   // Dropdown menu items
@@ -247,6 +372,50 @@ export default function DashboardLayout({
       </Menu.Item>
     </Menu>
   );
+
+  // Map routes to menu keys
+  const routeToKeyMap: { [key: string]: string } = {
+    "/dashboard": "1",
+    "/contributions": "contributions",
+    "/contributions/manage": "manage-contributions",
+    "/statements": "statements",
+    "/notifications": "notifications",
+    "/benefits": "benefits",
+  };
+
+  // Map routes to submenu keys
+  const routeToSubmenuKeyMap: { [key: string]: string } = {
+    "/contributions": "contributions",
+    "/contributions/manage": "contributions",
+  };
+
+  // Generate breadcrumb items based on the current path
+  const generateBreadcrumbItems = (path: string) => {
+    const paths = path.split("/").filter((p) => p);
+    const items = paths.map((p, index) => {
+      const url = `/${paths.slice(0, index + 1).join("/")}`;
+      const title = p.charAt(0).toUpperCase() + p.slice(1);
+      return { title, url };
+    });
+    return items;
+  };
+
+  // Update selectedKeys, openKeys, and breadcrumbItems based on the current route
+  useEffect(() => {
+    const path = location.pathname;
+    const key = routeToKeyMap[path] || "1";
+    setSelectedKeys([key]);
+
+    const submenuKey = routeToSubmenuKeyMap[path];
+    if (submenuKey) {
+      setOpenKeys([submenuKey]);
+    } else {
+      setOpenKeys([]);
+    }
+
+    const breadcrumbItems = generateBreadcrumbItems(path);
+    setBreadcrumbItems(breadcrumbItems);
+  }, [location.pathname]);
 
   const items: MenuItem[] = [
     {
@@ -319,27 +488,60 @@ export default function DashboardLayout({
   ];
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider collapsible>
-        <div className="brand text-white text-center py-8 text-lg font-semibold"></div>
+    <Layout style={{ minHeight: "100vh" }} hasSider>
+      {/* Sider (hidden on mobile) */}
+      <Sider
+        collapsible
+        style={siderStyle}
+        className="hidden lg:block" // Hide on mobile, show on larger screens
+      >
+        <div className="brand flex items-center justify-center gap-2 text-white text-center py-8 text-lg font-semibold">
+          <img
+            src="/images/nlpc_pension_logo.jpg"
+            alt="Brand Logo"
+            width="30"
+          />
+          {/* <h1 className="text-white">NLPC PFA</h1> */}
+        </div>
         <Menu
           theme="dark"
           mode="inline"
           items={items}
+          selectedKeys={selectedKeys}
+          openKeys={openKeys}
+          onOpenChange={(keys) => setOpenKeys(keys)}
           defaultSelectedKeys={["1"]}
         />
       </Sider>
+
       <Layout>
-        <Header
-          style={{
-            padding: "0 16px",
-            background: "#001529",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <span className="text-white text-lg font-semibold">Dashboard</span>
+        <Header style={headerStyle}>
+          <div className="flex items-center gap-4">
+            {/* Hamburger menu button (visible on mobile) */}
+            {window.innerWidth < 768 && (
+              <Button
+                type="text"
+                icon={<MenuOutlined />}
+                onClick={toggleDrawer}
+                className="block lg:hidden" // Show on mobile, hide on larger screens
+                style={{ color: "#fff" }}
+              />
+            )}
+
+            {/* Breadcrumb */}
+            <Breadcrumb>
+              {breadcrumbItems.map((item, index) => (
+                <Breadcrumb.Item
+                  className="text-base font-semibold text-white"
+                  key={index}
+                >
+                  {item.title}
+                </Breadcrumb.Item>
+              ))}
+            </Breadcrumb>
+          </div>
+
+          {/* User dropdown */}
           <Dropdown overlay={dropdownMenu} trigger={["click"]}>
             <div
               style={{
@@ -350,20 +552,61 @@ export default function DashboardLayout({
               }}
             >
               <Avatar
-                src={tempAvatar || user?.avatar} // Use tempAvatar if available, otherwise use user.avatar
+                src={tempAvatar || user?.avatar}
                 icon={<UserOutlined />}
               />
               <Text style={{ color: "#fff" }}>
                 {tempName || user?.name || "User"}
-              </Text>{" "}
-              {/* Use tempName if available, otherwise use user.name */}
+              </Text>
             </div>
           </Dropdown>
         </Header>
+
         <Content style={{ margin: "16px" }}>
           <div className="bg-white p-6 rounded-lg shadow">{children}</div>
         </Content>
       </Layout>
+
+      {/* Drawer for mobile navigation */}
+      <ConfigProvider
+        theme={{
+          components: {
+            Drawer: {
+              // width: 250,
+            },
+          },
+        }}
+      >
+        <Drawer
+          title="Menu"
+          placement="left"
+          onClose={toggleDrawer}
+          visible={isDrawerVisible}
+          width={250}
+          style={{
+            backgroundColor: "var(--sider-menu-bg)",
+          }}
+          bodyStyle={{ padding: 0 }}
+        >
+          <div className="brand flex items-center justify-center gap-2 text-white text-center py-8 text-lg font-semibold">
+            <img
+              src="/images/nlpc_pension_logo.jpg"
+              alt="Brand Logo"
+              width="30"
+            />
+            <h1 className="text-white text-2xl">NLPC PFA</h1>
+          </div>
+          <Menu
+            theme="dark"
+            mode="inline"
+            items={items}
+            selectedKeys={selectedKeys}
+            openKeys={openKeys}
+            onOpenChange={(keys) => setOpenKeys(keys)}
+            defaultSelectedKeys={["1"]}
+          />
+        </Drawer>
+      </ConfigProvider>
 
       {/* Settings Modal */}
       <SettingsModal
