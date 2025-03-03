@@ -8,7 +8,13 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const ContributionChart = ({ data }: { data: any[] }) => {
+interface ContributionData {
+  date: string;
+  amount: string | number; // Update this to match your data type
+  // Add other fields here if you need them
+}
+
+const ContributionChart = ({ data }: { data: ContributionData[] }) => {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <LineChart data={data}>

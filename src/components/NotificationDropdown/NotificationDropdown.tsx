@@ -2,13 +2,29 @@ import { Badge, Dropdown, List, Button } from "antd";
 import { BellOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { markAsRead } from "../../features/notifications/notificationsSlice";
+import { RootState } from "../../store";
 
 const NotificationDropdown = () => {
   const dispatch = useDispatch();
+
+  interface Notification {
+    id: number;
+    message: string;
+    read: boolean;
+  }
+
+  //   interface NotificationsState {
+  //     notifications: Notification[];
+  //   }
+
+  //   const initialState: NotificationsState = {
+  //     notifications: [],
+  //   };
+
   const notifications = useSelector(
-    (state: any) => state.notifications.notifications
+    (state: RootState) => state.notifications.notifications
   );
-  const unreadCount = notifications.filter((n: any) => !n.read).length;
+  const unreadCount = notifications.filter((n) => !n.read).length;
 
   const handleMarkAsRead = (id: number) => {
     dispatch(markAsRead(id));
@@ -17,7 +33,7 @@ const NotificationDropdown = () => {
   const menu = (
     <List
       dataSource={notifications}
-      renderItem={(item: any) => (
+      renderItem={(item: Notification) => (
         <List.Item className={!item.read ? "font-bold" : ""}>
           {item.message}
           {!item.read && (

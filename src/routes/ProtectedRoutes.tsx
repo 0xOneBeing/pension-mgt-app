@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     (state: RootState) => state.auth.isAuthenticated
   );
 
-  return isAuthenticated ? children : <Navigate to="/login" />;
+  return isAuthenticated ? children : <Navigate to="/" />;
 };
 
 export default ProtectedRoute;
