@@ -162,12 +162,15 @@ const Statements = () => {
           <ContributionChart data={filteredStatements} />
         </Card>
 
-        <Card title="Statements">
-          <div className="my-4 flex justify-end gap-3">
-            <Button type="primary" onClick={handleDownloadPDF}>
-              Download PDF
-            </Button>
-            <Button onClick={handleShareEmail}>Share via Email</Button>
+        <Card title={false}>
+          <div className="my-4 flex items-center justify-between">
+            <h1 className="text-base text-black font-[600]">Statements</h1>
+            <div className="flex justify-end gap-3">
+              <Button type="primary" onClick={handleDownloadPDF}>
+                Download PDF
+              </Button>
+              <Button onClick={handleShareEmail}>Share via Email</Button>
+            </div>
           </div>
           <Table
             dataSource={filteredStatements}

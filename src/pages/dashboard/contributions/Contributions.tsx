@@ -1,5 +1,7 @@
-import { Table, Tag, Typography } from "antd";
+import { Button, Table, Tag, Typography } from "antd";
 import DashboardLayout from "../../../components/DashboardLayout/DashboardLayout";
+import { PlusOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -35,6 +37,8 @@ const contributions = [
 ];
 
 export default function Contributions() {
+  const navigate = useNavigate();
+
   const columns = [
     { title: "Date", dataIndex: "date", key: "date" },
     { title: "Amount", dataIndex: "amount", key: "amount" },
@@ -64,7 +68,17 @@ export default function Contributions() {
 
   return (
     <DashboardLayout>
-      <Title level={3}>Contribution History</Title>
+      <div className="flex justify-between items-center ">
+        <Title level={3}>Contribution History</Title>
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          // href="/contributions/manage"
+          onClick={() => navigate("/contributions/manage")}
+        >
+          Add Contribution
+        </Button>
+      </div>
       <Table dataSource={contributions} columns={columns} rowKey="id" />
     </DashboardLayout>
   );
