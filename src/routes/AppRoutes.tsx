@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Login from "../pages/login/Login";
+import ForgotPassword from "../pages/login/forgot-password/ForgotPassword";
 import Dashboard from "../pages/dashboard/Dashboard";
 import ProtectedRoute from "./ProtectedRoutes";
 import Contributions from "../pages/dashboard/contributions/Contributions";
@@ -13,6 +14,8 @@ const AppRoutes = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Login />} />
+
+        <Route path="/forgot-password" element={<ForgotPassword />} />
 
         <Route
           path="/dashboard"

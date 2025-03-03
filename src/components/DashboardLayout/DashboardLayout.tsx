@@ -36,7 +36,7 @@ export default function DashboardLayout({
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/");
   };
 
   const items: MenuItem[] = [
@@ -119,10 +119,8 @@ export default function DashboardLayout({
     },
     {
       key: "grp",
-      // label: "Group",
       type: "group",
       children: [
-        // { key: "13", label: "Option 13" },
         {
           key: "14",
           label: "Logout",
