@@ -21,24 +21,6 @@ const ContributionForm = ({ onSubmit }: ContributionFormProps) => {
     { date: string; type: "Mandatory" | "Voluntary" }[]
   >([]);
 
-  // const validateContribution = (_: any, value: string) => {
-  //   if (!/^\d+(\.\d{1,2})?$/.test(value)) {
-  //     return Promise.reject(
-  //       new Error("Enter a valid amount (e.g., 1000 or 1000.50)")
-  //     );
-  //   }
-  //   return Promise.resolve();
-  // };
-
-  // const validateContribution: Rule["validator"] = (_, value: string) => {
-  //   if (!/^\d+(\.\d{1,2})?$/.test(value)) {
-  //     return Promise.reject(
-  //       new Error("Enter a valid amount (e.g., 1000 or 1000.50)")
-  //     );
-  //   }
-  //   return Promise.resolve();
-  // };
-
   const validateContribution = (_: RuleObject, value: string) => {
     if (!/^\d+(\.\d{1,2})?$/.test(value)) {
       return Promise.reject(
@@ -52,7 +34,6 @@ const ContributionForm = ({ onSubmit }: ContributionFormProps) => {
     const { date, type } = values;
     const formattedDate = dayjs(date).format("YYYY-MM");
 
-    // Check for duplicate Mandatory contributions in the same month
     if (
       type === "Mandatory" &&
       contributions.some(
