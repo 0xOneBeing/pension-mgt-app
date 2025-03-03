@@ -22,14 +22,15 @@ const Login = () => {
 
   const onFinish = (values: { username: string; password: string }) => {
     if (values.username === "admin" && values.password === "password") {
-      dispatch(login({ name: "Admin User", role: "admin" }));
+      dispatch(
+        login({ name: "Admin User", role: "admin", email: "admin@nlpc.com" })
+      );
       ShowToast("success", "Login successful.");
       navigate("/dashboard");
-    } else if (
-      values.username === "individual" &&
-      values.password === "password"
-    ) {
-      dispatch(login({ name: "Individual User", role: "individual" }));
+    } else if (values.username === "member" && values.password === "password") {
+      dispatch(
+        login({ name: "Member User", role: "member", email: "member@nlpc,com" })
+      );
       ShowToast("success", "Login successful.");
       navigate("/dashboard");
     } else {

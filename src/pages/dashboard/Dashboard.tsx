@@ -1,39 +1,43 @@
-// import { Button } from "antd";
-// import { useDispatch } from "react-redux";
-// import { logout } from "../../features/auth/authSlice";
-// import { useNavigate } from "react-router-dom";
-
-// const Dashboard = () => {
-//   const dispatch = useDispatch();
-//   const navigate = useNavigate();
-
-//   const handleLogout = () => {
-//     dispatch(logout());
-//     navigate("/login");
-//   };
-
-//   return (
-//     <div className="p-6">
-//       <h1 className="text-2xl font-bold">Dashboard</h1>
-//       <Button type="primary" onClick={handleLogout}>
-//         Logout
-//       </Button>
-//     </div>
-//   );
-// };
-
-// export default Dashboard;
-
-import { Card, Avatar, List, Typography } from "antd";
-import { UserOutlined } from "@ant-design/icons";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import {
+  Card,
+  // FAvatar,
+  List,
+  Typography,
+} from "antd";
+// import { UserOutlined } from "@ant-design/icons";
+// import { useSelector } from "react-redux";
+// import { RootState } from "../../store";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend,
+} from "chart.js";
+import { Bar, Line, Pie, Doughnut } from "react-chartjs-2";
 
-const { Title, Text } = Typography;
+const { Title: AntTitle, Text } = Typography;
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  LineElement,
+  PointElement,
+  ArcElement,
+  Title,
+  Tooltip,
+  Legend
+);
 
 const Dashboard = () => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  // const user = useSelector((state: RootState) => state.auth.user);
 
   const recentTransactions = [
     { date: "Feb 20, 2025", amount: "₦50,000", type: "Mandatory" },
@@ -43,35 +47,135 @@ const Dashboard = () => {
     { date: "Oct 25, 2024", amount: "₦40,000", type: "Mandatory" },
   ];
 
+  const contributionsData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    datasets: [
+      {
+        label: "Contributions (₦)",
+        data: [50000, 60000, 55000, 70000, 65000, 80000, 75000],
+        borderColor: "#4BB543",
+        backgroundColor: "rgba(75, 181, 67, 0.2)",
+        fill: true,
+      },
+    ],
+  };
+
+  const benefitsData = {
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+    datasets: [
+      {
+        label: "Benefits Paid (₦)",
+        data: [20000, 25000, 30000, 35000, 40000, 45000, 50000],
+        backgroundColor: "#3498db",
+      },
+    ],
+  };
+
+  const projectionsData = {
+    labels: ["2024", "2025", "2026", "2027", "2028"],
+    datasets: [
+      {
+        label: "Projected Contributions (₦)",
+        data: [500000, 600000, 700000, 800000, 900000],
+        borderColor: "#FFA500",
+        backgroundColor: "rgba(255, 165, 0, 0.2)",
+        fill: true,
+      },
+    ],
+  };
+
+  const claimsVsBenefitsData = {
+    labels: ["Claims", "Benefits"],
+    datasets: [
+      {
+        label: "Amount (₦)",
+        data: [300000, 500000],
+        backgroundColor: ["#FF6384", "#36A2EB"],
+        hoverBackgroundColor: ["#FF6384", "#36A2EB"],
+      },
+    ],
+  };
+
+  const monthlyContributionsData = {
+    labels: ["Mandatory", "Voluntary"],
+    datasets: [
+      {
+        label: "Amount (₦)",
+        data: [700000, 300000],
+        backgroundColor: ["#4BB543", "#3498db"],
+        hoverBackgroundColor: ["#4BB543", "#3498db"],
+      },
+    ],
+  };
+
   return (
     <DashboardLayout>
+      <div className="flex flex-col lg:flex-row items-stretch justify-between">
+        {/* Monthly Contributions Breakdown (Doughnut Chart) */}
+        <div className="w-full lg:w-1/3 h-full">
+          <Card className="col-span-1">
+            <AntTitle level={4}>Monthly Contributions Breakdown</AntTitle>
+            <Doughnut data={monthlyContributionsData} />
+          </Card>
+        </div>
+
+        {/* Claims vs. Benefits (Pie Chart) */}
+        <div className="w-full lg:w-1/3 h-full">
+          <Card className="col-span-1">
+            <AntTitle level={4}>Claims vs. Benefits</AntTitle>
+            <Pie data={claimsVsBenefitsData} />
+          </Card>
+        </div>
+
+        {/* Contribution Summary */}
+        <div className="w-full lg:w-1/2 h-full">
+          <Card className="col-span-2">
+            <AntTitle level={4}>Contribution Summary</AntTitle>
+            <List
+              dataSource={recentTransactions}
+              renderItem={(item) => (
+                <List.Item>
+                  <div className="flex justify-between w-full">
+                    <Text>{item.date}</Text>
+                    <Text>{item.amount}</Text>
+                    <Text type="secondary">{item.type}</Text>
+                  </div>
+                </List.Item>
+              )}
+            />
+          </Card>
+        </div>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Profile Card */}
-        <Card className="col-span-1">
+        {/* <Card className="col-span-1">
           <div className="flex items-center space-x-4">
             <Avatar size={80} icon={<UserOutlined />} />
             <div>
-              <Title level={4}>{user?.name || "John Doe"}</Title>
+              <AntTitle level={4}>{user?.name || "John Doe"}</AntTitle>
               <Text type="secondary">Frontend Engineer</Text>
             </div>
           </div>
+        </Card> */}
+
+        {/* Projections for Future Contributions (Line Chart) */}
+
+        <Card className="col-span-3">
+          <AntTitle level={4}>Projections for Future Contributions</AntTitle>
+          <Line data={projectionsData} />
         </Card>
 
-        {/* Contribution Summary */}
-        <Card className="col-span-2">
-          <Title level={4}>Contribution Summary</Title>
-          <List
-            dataSource={recentTransactions}
-            renderItem={(item) => (
-              <List.Item>
-                <div className="flex justify-between w-full">
-                  <Text>{item.date}</Text>
-                  <Text>{item.amount}</Text>
-                  <Text type="secondary">{item.type}</Text>
-                </div>
-              </List.Item>
-            )}
-          />
+        {/* Contributions Over Time (Line Chart) */}
+        <Card className="col-span-3">
+          <AntTitle level={4}>Contributions Over Time</AntTitle>
+          <Line data={contributionsData} />
+        </Card>
+
+        {/* Benefits Paid (Bar Chart) */}
+        <Card className="col-span-3">
+          <AntTitle level={4}>Benefits Paid</AntTitle>
+          <Bar data={benefitsData} />
         </Card>
       </div>
     </DashboardLayout>
