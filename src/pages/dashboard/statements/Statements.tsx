@@ -1,9 +1,10 @@
-import { Card, Table, Button, message } from "antd";
+import { Card, Table, Button } from "antd";
 import { useState } from "react";
 import { jsPDF } from "jspdf";
 import StatementForm from "../../../components/StatementForm/StatementForm";
 import ContributionChart from "../../../components/ContributionChart/ContributionChart";
 import DashboardLayout from "../../../components/DashboardLayout/DashboardLayout";
+import { showToast } from "../../../components/ShowToast/ShowToast";
 
 // Define the types for the data
 interface Statement {
@@ -44,11 +45,11 @@ const Statements = () => {
     });
 
     doc.save("Contribution_Statement.pdf");
-    message.success("PDF downloaded!");
+    showToast("success", "PDF downloaded!");
   };
 
   const handleShareEmail = () => {
-    message.success("Statement sent via email!");
+    showToast("success", "Statement sent via email!");
   };
 
   const columns = [

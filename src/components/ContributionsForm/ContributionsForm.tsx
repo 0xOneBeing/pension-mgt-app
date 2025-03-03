@@ -1,7 +1,8 @@
-import { Form, Input, Button, Select, DatePicker, message } from "antd";
+import { Form, Input, Button, Select, DatePicker } from "antd";
 import { useState } from "react";
 import dayjs from "dayjs";
 import { RuleObject } from "rc-field-form/es/interface"; // Correct import path
+import { showToast } from "../ShowToast/ShowToast";
 
 const { Option } = Select;
 
@@ -40,14 +41,17 @@ const ContributionForm = ({ onSubmit }: ContributionFormProps) => {
         (c) => c.date === formattedDate && c.type === "Mandatory"
       )
     ) {
-      message.error("Only one Mandatory contribution is allowed per month.");
+      showToast(
+        "error",
+        "Only one Mandatory contribution is allowed per month."
+      );
       return;
     }
 
     setContributions([...contributions, { date: formattedDate, type }]);
     onSubmit(values);
     form.resetFields();
-    message.success("Contribution added successfully!");
+    showToast("success", "Contribution added successfully!");
   };
 
   return (

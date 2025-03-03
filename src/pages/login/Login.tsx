@@ -2,7 +2,6 @@ import { Form, Input, Button, Card } from "antd";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
 // import "swiper/css";
@@ -12,6 +11,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "../../assets/swiper.css"; // Substituted for self-hosted css file ???
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
 import "./Login.css";
+import { showToast } from "../../components/ShowToast/ShowToast";
+import { ToastContainer } from "../../components/ShowToast/Toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -22,25 +23,17 @@ const Login = () => {
   const onFinish = (values: { username: string; password: string }) => {
     if (values.username === "admin" && values.password === "password") {
       dispatch(login({ name: "Admin User", role: "admin" }));
-      toast("Login successful.");
+      showToast("success", "Login successful.");
       navigate("/dashboard");
     } else if (
       values.username === "individual" &&
       values.password === "password"
     ) {
       dispatch(login({ name: "Individual User", role: "individual" }));
-      toast("Login successful.");
+      showToast("success", "Login successful.");
       navigate("/dashboard");
     } else {
-      toast.error("Invalid credentials!", {
-        style: {
-          // background: "#4BB543",
-          background: "#FF0000",
-          padding: "20px 30px",
-          color: "#fff",
-        },
-        // icon: "🎉",
-      });
+      showToast("error", "Invalid credentials!");
     }
   };
 
@@ -151,6 +144,8 @@ const Login = () => {
           Forgot password? Click here
         </Link>
       </div>
+
+      <ToastContainer />
     </div>
   );
 };

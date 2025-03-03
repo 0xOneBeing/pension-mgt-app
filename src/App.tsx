@@ -1,7 +1,7 @@
 import { ConfigProvider } from "antd";
 import "./App.css";
 import AppRoutes from "./routes/AppRoutes";
-import { Toaster } from "react-hot-toast";
+import { ToastContainer } from "./components/ShowToast/Toast";
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
       }}
     >
       <AppRoutes />
-      <Toaster position="top-right" />
+      <ToastContainer />
     </ConfigProvider>
   );
 }
