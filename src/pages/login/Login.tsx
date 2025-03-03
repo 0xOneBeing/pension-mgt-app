@@ -148,7 +148,7 @@ const Login = () => {
           to="/forgot-password"
           className="text-sm text-[var(--primary-colro)] mt-2 text-center hover:underline"
         >
-          Forgot password
+          Forgot password? Click here
         </Link>
       </div>
     </div>

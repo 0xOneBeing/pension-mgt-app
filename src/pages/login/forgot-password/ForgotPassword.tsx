@@ -1,7 +1,7 @@
 import { Form, Input, Button, Card } from "antd";
 import { CheckOutlined, UserOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ForgotPassword = () => {
   const navigate = useNavigate();
@@ -20,7 +20,9 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full h-full lg:w-1/2 hidden lg:flex bg-[var(--primary-color)]"></div>
+      <div className="w-full h-full items-center justify-center flex flex-col lg:w-1/2 hidden lg:flex bg-[var(--primary-color)] text-white text-center">
+        <h3 className="text-4xl">Let us help you recovery your password</h3>
+      </div>
 
       <div className="w-full lg:w-1/2 flex flex-col items-center justify-center h-screen bg-gray-100">
         <img
@@ -68,6 +70,15 @@ const ForgotPassword = () => {
 
           <p className="text-xs">&copy; {currentYear} All rights reserved</p>
         </Card>
+
+        {!isFormOK && (
+          <Link
+            to="/"
+            className="text-sm text-[var(--primary-colro)] mt-2 text-center hover:underline"
+          >
+            Remember password? Click here
+          </Link>
+        )}
       </div>
     </div>
   );
