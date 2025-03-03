@@ -5,6 +5,7 @@ import {
   LogoutOutlined,
   NotificationOutlined,
   PlusCircleOutlined,
+  AccountBookOutlined,
 } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { logout } from "../../features/auth/authSlice";
@@ -96,7 +97,7 @@ export default function DashboardLayout({
     {
       key: "statements",
       label: "Statements",
-      icon: <UserOutlined />,
+      icon: <AccountBookOutlined />,
       onClick: () => {
         navigate("/statements");
       },

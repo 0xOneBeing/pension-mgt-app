@@ -23,9 +23,9 @@ const ContributionChart = ({ data }: { data: ContributionData[] }) => {
         <Tooltip />
         <CartesianGrid stroke="#f5f5f5" />
         <Line
-          type="monotone"
+          type="bump"
           dataKey="amount"
-          stroke="#1890ff"
+          stroke="var(--primary-color)"
           strokeWidth={2}
         />
       </LineChart>
