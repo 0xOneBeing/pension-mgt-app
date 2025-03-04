@@ -31,7 +31,7 @@ const Login = () => {
       dispatch(
         login({ name: "Member User", role: "member", email: "member@nlpc,com" })
       );
-      ShowToast("success", "Login successful.");
+      ShowToast("success", "Login successful");
       navigate("/dashboard");
     } else {
       ShowToast("error", "Invalid credentials!");
@@ -118,7 +118,10 @@ const Login = () => {
               name="username"
               rules={[{ required: true }]}
             >
-              <Input prefix={<UserOutlined className="mr-2" />} />
+              <Input
+                placeholder="Enter email/username"
+                prefix={<UserOutlined className="mr-2" />}
+              />
             </Form.Item>
 
             <Form.Item
@@ -126,7 +129,10 @@ const Login = () => {
               name="password"
               rules={[{ required: true }]}
             >
-              <Input.Password prefix={<LockOutlined className="mr-2" />} />
+              <Input.Password
+                placeholder="Enter password"
+                prefix={<LockOutlined className="mr-2" />}
+              />
             </Form.Item>
 
             <Form.Item>
