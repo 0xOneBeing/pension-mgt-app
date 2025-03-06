@@ -1,6 +1,8 @@
 # Pension Management Application
 
-This application is a web-based Pension Management System designed to help users manage their pension contributions, view statements, receive notifications, and get a preview of their projected benefits.
+This application is a web-based Pension Management System designed to help users manage their pension contributions, view statements, receive notifications, and get a preview of their projected benefits. Design for this project can be found in this [Figma file](https://www.figma.com/design/yRypAU2tuaxRByls9q4IUn/Pension-Management-Application?node-id=0-1&t=RmL0vvUrld0EUESy-1).
+
+Visit [this link](https://pension-mgt-app.vercel.app/) for the deployed implementation.
 
 ## Table of Contents
 
