@@ -7,11 +7,10 @@ import DashboardLayout from "../../../components/DashboardLayout/DashboardLayout
 import { ShowToast } from "../../../components/ShowToast/ShowToast.tsx";
 import logo from "../../../../public/images/nlpc_pension_logo.jpg";
 
-// Define the types for the data
 interface Statement {
   id: number;
   date: string;
-  amount: string; // Or number if it's numeric
+  amount: string;
   type: string;
 }
 
@@ -21,7 +20,6 @@ interface DateRange {
 }
 
 const Statements = () => {
-  //   const [statements, setStatements] = useState<Statement[]>([
   const [statements] = useState<Statement[]>([
     { id: 3, date: "2023-01-12", amount: "1000", type: "Mandatory" },
     { id: 4, date: "2023-02-15", amount: "1200", type: "Voluntary" },
@@ -61,39 +59,25 @@ const Statements = () => {
     setFilteredStatements(filtered);
   };
 
-  // const handleDownloadPDF = () => {
-  //   const doc = new jsPDF();
-  //   doc.text("Contribution Statement", 20, 20);
-
-  //   filteredStatements.forEach((s, index) => {
-  //     doc.text(`${s.date}: ${s.amount} (${s.type})`, 20, 30 + index * 10);
-  //   });
-
-  //   doc.save("Contribution_Statement.pdf");
-  //   ShowToast("success", "PDF downloaded!");
-  // };
-
   const handleDownloadPDF = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     const margin = 20;
-    let currentY = margin + 20; // Start after the header
+    let currentY = margin + 20;
 
-    // Add Header with Logo
     if (logo) {
-      doc.addImage(logo, "PNG", margin, margin, 20, 20); // Logo at top-left
+      doc.addImage(logo, "PNG", margin, margin, 20, 20);
     }
     doc.setFontSize(18);
     doc.text("Contribution Statement", margin + 25, margin + 15);
 
     doc.setFontSize(12);
-    currentY += 10; //Add space under header
-    // Add Date/Time for when it was generated
+    currentY += 10;
+
     const now = new Date().toLocaleString();
     doc.text(`Generated on: ${now}`, margin, currentY);
     currentY += 5;
 
-    // Add filtered range if there are statements.
     if (filteredStatements.length > 0) {
       const firstStatementDate = filteredStatements[0].date;
       const lastStatementDate =
@@ -109,7 +93,6 @@ const Statements = () => {
       currentY += 15;
     }
 
-    // Add table header
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
     doc.text("Date", margin, currentY);
@@ -120,11 +103,9 @@ const Statements = () => {
     doc.line(margin, currentY, pageWidth - margin, currentY);
     currentY += 5;
 
-    // Reset font
     doc.setFont("helvetica", "normal");
     doc.setFontSize(12);
 
-    // Add statements details
     filteredStatements.forEach((s) => {
       if (currentY > doc.internal.pageSize.getHeight() - margin * 2) {
         doc.addPage();

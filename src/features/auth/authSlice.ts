@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface User {
   name: string;
-  role: string,
+  role: string;
   email: string;
   avatar?: string;
 }
@@ -53,7 +53,7 @@ const authSlice = createSlice({
         state.user.email = state.tempEmail || state.user.email;
         state.user.avatar = state.tempAvatar || state.user.avatar;
       }
-      // Clear temporary values after updating
+
       state.tempAvatar = null;
       state.tempName = null;
       state.tempEmail = null;
@@ -61,7 +61,6 @@ const authSlice = createSlice({
   },
 });
 
-// Export all actions
 export const {
   login,
   logout,

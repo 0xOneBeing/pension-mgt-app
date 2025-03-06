@@ -73,7 +73,6 @@ export default function Contributions() {
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          // href="/contributions/manage"
           onClick={() => navigate("/contributions/manage")}
         >
           Add Contribution

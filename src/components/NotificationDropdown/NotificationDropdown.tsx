@@ -13,14 +13,6 @@ const NotificationDropdown = () => {
     read: boolean;
   }
 
-  //   interface NotificationsState {
-  //     notifications: Notification[];
-  //   }
-
-  //   const initialState: NotificationsState = {
-  //     notifications: [],
-  //   };
-
   const notifications = useSelector(
     (state: RootState) => state.notifications.notifications
   );

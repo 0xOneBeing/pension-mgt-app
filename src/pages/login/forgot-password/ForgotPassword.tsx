@@ -20,7 +20,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <div className="w-full h-full items-center justify-center flex flex-col lg:w-1/2 hidden lg:flex bg-[var(--primary-color)] text-white text-center">
+      <div className="w-full h-full items-center justify-center lg:w-1/2 hidden lg:flex bg-[var(--primary-color)] text-white text-center">
         <h3 className="text-4xl">Let us help you recover your password</h3>
       </div>
 

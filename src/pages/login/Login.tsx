@@ -4,15 +4,10 @@ import { login } from "../../features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Swiper, SwiperSlide } from "swiper/react";
-// import "swiper/css";
-// import "swiper/css/pagination";
-// import "swiper/css/navigation";
-// import "swiper/css/effect-fade";
 import "../../assets/swiper.css"; // Substituted for self-hosted css file ???
 import { Autoplay, EffectFade, Pagination, Navigation } from "swiper/modules";
 import "./Login.css";
 import { ShowToast } from "../../components/ShowToast/ShowToast.tsx";
-// import { ToastContainer } from "../../components/ShowToast/Toast";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -72,16 +67,6 @@ const Login = () => {
             />
           </SwiperSlide>
           <SwiperSlide>
-            {/* <div
-              className="h-full w-full bg-cover bg-center"
-              style={{
-                backgroundImage: "url('https://via.placeholder.com/1920x1080')",
-              }}
-            >
-              <div className="h-full flex items-center justify-center bg-black bg-opacity-50">
-                <h1 className="text-white text-4xl font-bold">Slide 3</h1>
-              </div>
-            </div> */}
             <img
               alt="Slide 3"
               src="/images/slide3.jpg"
@@ -114,7 +99,6 @@ const Login = () => {
         <Card title={false} className="w-96">
           <Form layout="vertical" onFinish={onFinish}>
             <Form.Item
-              // label="Username"
               name="username"
               rules={[{ required: true }]}
             >
@@ -125,7 +109,6 @@ const Login = () => {
             </Form.Item>
 
             <Form.Item
-              // label="Password"
               name="password"
               rules={[{ required: true }]}
             >
@@ -151,8 +134,6 @@ const Login = () => {
           Forgot password? Click here
         </Link>
       </div>
-
-      {/* <ToastContainer /> */}
     </div>
   );
 };

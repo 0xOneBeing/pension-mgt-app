@@ -3,7 +3,7 @@ export const calculateBenefitProjection = (contributions: any[]) => {
     (sum, c) => sum + c.amount,
     0
   );
-  const projectedGrowth = totalContributions * 1.05; // Assuming 5% annual growth rate
+  const projectedGrowth = totalContributions * 1.05;
 
   return {
     totalContributions,

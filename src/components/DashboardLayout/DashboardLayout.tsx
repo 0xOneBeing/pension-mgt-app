@@ -48,7 +48,7 @@ export default function DashboardLayout({
   const [breadcrumbItems, setBreadcrumbItems] = useState<{ title: string }[]>(
     []
   );
-  const [isDrawerVisible, setIsDrawerVisible] = useState(false); // State for drawer visibility
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false);
 
   type MenuItem = Required<MenuProps>["items"][number];
 
@@ -92,7 +92,6 @@ export default function DashboardLayout({
     setIsDrawerVisible(!isDrawerVisible);
   };
 
-  // Dropdown menu items
   const dropdownMenu = (
     <Menu>
       <Menu.Item
@@ -108,7 +107,6 @@ export default function DashboardLayout({
     </Menu>
   );
 
-  // Map routes to menu keys
   const routeToKeyMap: { [key: string]: string } = {
     "/dashboard": "1",
     "/contributions": "contributions",
@@ -118,13 +116,11 @@ export default function DashboardLayout({
     "/benefits": "benefits",
   };
 
-  // Map routes to submenu keys
   const routeToSubmenuKeyMap: { [key: string]: string } = {
     "/contributions": "contributions",
     "/contributions/manage": "contributions",
   };
 
-  // Generate breadcrumb items based on the current path
   const generateBreadcrumbItems = (path: string) => {
     const paths = path.split("/").filter((p) => p);
     const items = paths.map((p, index) => {
@@ -135,7 +131,6 @@ export default function DashboardLayout({
     return items;
   };
 
-  // Update selectedKeys, openKeys, and breadcrumbItems based on the current route
   useEffect(() => {
     const path = location.pathname;
     const key = routeToKeyMap[path] || "1";
@@ -224,19 +219,13 @@ export default function DashboardLayout({
 
   return (
     <Layout style={{ minHeight: "100vh" }} hasSider>
-      {/* Sider (hidden on mobile) */}
-      <Sider
-        collapsible
-        style={siderStyle}
-        className="hidden lg:block" // Hide on mobile, show on larger screens
-      >
+      <Sider collapsible style={siderStyle} className="hidden lg:block">
         <div className="brand flex items-center justify-center gap-2 text-white text-center py-8 text-lg font-semibold">
           <img
             src="/images/nlpc_pension_logo.jpg"
             alt="Brand Logo"
             width="30"
           />
-          {/* <h1 className="text-white">NLPC PFA</h1> */}
         </div>
         <Menu
           theme="dark"
@@ -252,18 +241,16 @@ export default function DashboardLayout({
       <Layout>
         <Header style={headerStyle}>
           <div className="flex items-center gap-4">
-            {/* Hamburger menu button (visible on mobile) */}
             {window.innerWidth < 768 && (
               <Button
                 type="text"
                 icon={<MenuOutlined />}
                 onClick={toggleDrawer}
-                className="block lg:hidden" // Show on mobile, hide on larger screens
+                className="block lg:hidden"
                 style={{ color: "#fff" }}
               />
             )}
 
-            {/* Breadcrumb */}
             <Breadcrumb>
               {breadcrumbItems.map((item, index) => (
                 <Breadcrumb.Item
@@ -276,16 +263,8 @@ export default function DashboardLayout({
             </Breadcrumb>
           </div>
 
-          {/* User dropdown */}
           <Dropdown overlay={dropdownMenu} trigger={["click"]}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                cursor: "pointer",
-              }}
-            >
+            <div className="flex items-center gap-2 cursor-pointer">
               <Avatar
                 src={tempAvatar || user?.avatar}
                 icon={<UserOutlined />}
@@ -302,13 +281,10 @@ export default function DashboardLayout({
         </Content>
       </Layout>
 
-      {/* Drawer for mobile navigation */}
       <ConfigProvider
         theme={{
           components: {
-            Drawer: {
-              // width: 250,
-            },
+            Drawer: {},
           },
         }}
       >
@@ -343,7 +319,6 @@ export default function DashboardLayout({
         </Drawer>
       </ConfigProvider>
 
-      {/* Settings Modal */}
       <SettingsModal
         visible={isSettingsModalVisible}
         onClose={handleSettingsModalClose}

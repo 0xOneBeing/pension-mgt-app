@@ -1,12 +1,4 @@
-import {
-  Card,
-  // FAvatar,
-  List,
-  Typography,
-} from "antd";
-// import { UserOutlined } from "@ant-design/icons";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../../store";
+import { Card, List, Typography } from "antd";
 import DashboardLayout from "../../components/DashboardLayout/DashboardLayout";
 import {
   Chart as ChartJS,
@@ -37,8 +29,6 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
-  // const user = useSelector((state: RootState) => state.auth.user);
-
   const recentTransactions = [
     { date: "Feb 20, 2025", amount: "₦50,000", type: "Mandatory" },
     { date: "Jan 15, 2025", amount: "₦30,000", type: "Voluntary" },
@@ -111,7 +101,6 @@ const Dashboard = () => {
   return (
     <DashboardLayout>
       <div className="flex flex-col lg:flex-row items-stretch justify-between">
-        {/* Monthly Contributions Breakdown (Doughnut Chart) */}
         <div className="w-full lg:w-1/3 h-full">
           <Card className="col-span-1">
             <AntTitle level={4}>Monthly Contributions Breakdown</AntTitle>
@@ -119,7 +108,6 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Claims vs. Benefits (Pie Chart) */}
         <div className="w-full lg:w-1/3 h-full">
           <Card className="col-span-1">
             <AntTitle level={4}>Claims vs. Benefits</AntTitle>
@@ -127,7 +115,6 @@ const Dashboard = () => {
           </Card>
         </div>
 
-        {/* Contribution Summary */}
         <div className="w-full lg:w-1/2 h-full">
           <Card className="col-span-2">
             <AntTitle level={4}>Contribution Summary</AntTitle>
@@ -148,31 +135,16 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {/* Profile Card */}
-        {/* <Card className="col-span-1">
-          <div className="flex items-center space-x-4">
-            <Avatar size={80} icon={<UserOutlined />} />
-            <div>
-              <AntTitle level={4}>{user?.name || "John Doe"}</AntTitle>
-              <Text type="secondary">Frontend Engineer</Text>
-            </div>
-          </div>
-        </Card> */}
-
-        {/* Projections for Future Contributions (Line Chart) */}
-
         <Card className="col-span-3">
           <AntTitle level={4}>Projections for Future Contributions</AntTitle>
           <Line data={projectionsData} />
         </Card>
 
-        {/* Contributions Over Time (Line Chart) */}
         <Card className="col-span-3">
           <AntTitle level={4}>Contributions Over Time</AntTitle>
           <Line data={contributionsData} />
         </Card>
 
-        {/* Benefits Paid (Bar Chart) */}
         <Card className="col-span-3">
           <AntTitle level={4}>Benefits Paid</AntTitle>
           <Bar data={benefitsData} />

@@ -10,8 +10,7 @@ import {
 
 interface ContributionData {
   date: string;
-  amount: string | number; // Update this to match your data type
-  // Add other fields here if you need them
+  amount: string | number;
 }
 
 const ContributionChart = ({ data }: { data: ContributionData[] }) => {

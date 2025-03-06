@@ -20,11 +20,7 @@ const NotificationSettings = () => {
       <Card title="Notification Preferences">
         <div className="flex items-center justify-between">
           <span>Email Notifications</span>
-          <Switch
-            checked={emailNotifications}
-            // onChange={setEmailNotifications}
-            onChange={onSwitchChange}
-          />
+          <Switch checked={emailNotifications} onChange={onSwitchChange} />
         </div>
       </Card>
     </DashboardLayout>

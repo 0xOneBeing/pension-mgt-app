@@ -5,15 +5,15 @@ import { Line } from "react-chartjs-2";
 const { Option } = Select;
 
 const BenefitCalculator = () => {
-  const [monthlyContribution, setMonthlyContribution] = useState(5000); // Default: ₦5000
-  const [years, setYears] = useState(20); // Default: 20 years
-  const [interestRate, setInterestRate] = useState(5); // Default: 5% annual return
+  const [monthlyContribution, setMonthlyContribution] = useState(5000);
+  const [years, setYears] = useState(20);
+  const [interestRate, setInterestRate] = useState(5);
   const [futureValue, setFutureValue] = useState(0);
   const [chartData, setChartData] = useState<any>(null);
 
   const calculateBenefit = () => {
-    const n = 12; // Compounded monthly
-    const r = interestRate / 100; // Convert to decimal
+    const n = 12;
+    const r = interestRate / 100;
     const t = years;
 
     let total = 0;

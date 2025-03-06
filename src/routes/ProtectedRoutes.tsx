@@ -1,41 +1,46 @@
 import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../store";
 import { useEffect, useState } from "react";
 import { Spin } from "antd";
+import { login } from "../features/auth/authSlice";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const dispatch = useDispatch();
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-  const [isLoading, setIsLoading] = useState(true); // Add loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate checking authentication state (e.g., from localStorage or an API)
     const authState = localStorage.getItem("authState");
+
     if (authState) {
-      setIsLoading(false); // Authentication state is initialized
-    } else {
-      setIsLoading(false); // No authentication state found
+      try {
+        const userData = JSON.parse(authState);
+        dispatch(login(userData));
+      } catch (error) {
+        console.error("Failed to parse auth data from localStorage:", error);
+        localStorage.removeItem("authState");
+      }
     }
-  }, []);
+
+    setIsLoading(false);
+  }, [dispatch]);
 
   if (isLoading) {
-    // return <div>Loading...</div>; // Show a loading spinner or placeholder
     return (
-      <div style={{ textAlign: "center", marginTop: "20%" }}>
+      <div className="text-center mt-[20%]">
         <Spin size="large" />
       </div>
     );
   }
 
-  return isAuthenticated ? (
-    children
-  ) : (
-    <div>
-      <Navigate to="/" />
-    </div>
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/" />;
+  }
+
+  return <>{children}</>;
 };
 
 export default ProtectedRoute;

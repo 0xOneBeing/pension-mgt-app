@@ -6,7 +6,6 @@ export const fetchContributions = async (): Promise<Contribution[]> => {
   return response.data;
 };
 
-
 export const addContribution = async (
   contribution: Omit<Contribution, "id" | "type" | "status">
 ): Promise<Contribution> => {
@@ -29,7 +28,7 @@ export const updateContribution = async (
 };
 
 export const deleteContribution = async (id: number): Promise<void> => {
-  // await apiClient.delete(`/contributions/${id}`);y
+  // await apiClient.delete(`/contributions/${id}`);
   const response = await apiClient.delete(`/contributions/${id}`);
   return response.data;
 };

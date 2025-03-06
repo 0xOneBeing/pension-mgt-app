@@ -3,7 +3,7 @@ import { useState } from "react";
 import DashboardLayout from "../../../../components/DashboardLayout/DashboardLayout";
 import ContributionForm from "../../../../components/ContributionsForm/ContributionsForm";
 import { Contribution } from "../../../../features/contribution/contributionSlice";
-import dayjs from "dayjs"; // Import dayjs for date handling
+import dayjs from "dayjs";
 
 interface ContributionFormValues {
   type: "Mandatory" | "Voluntary";
@@ -31,11 +31,11 @@ const ContributionManagement = () => {
 
   const addContribution = (values: ContributionFormValues) => {
     const newContribution: Contribution = {
-      id: contributions.length + 1, // Generate a new ID
-      date: values.date.format("YYYY-MM"), // Format the date
-      amount: values.amount, // Use the amount directly (without currency symbol)
+      id: contributions.length + 1,
+      date: values.date.format("YYYY-MM"),
+      amount: values.amount,
       type: values.type,
-      status: "Pending", // Default status
+      status: "Pending",
     };
     setContributions([...contributions, newContribution]);
   };
@@ -46,7 +46,7 @@ const ContributionManagement = () => {
       title: "Amount",
       dataIndex: "amount",
       key: "amount",
-      render: (amount: number) => `₦${amount.toLocaleString()}`, // Format amount with currency symbol
+      render: (amount: number) => `₦${amount.toLocaleString()}`,
     },
     {
       title: "Type",
